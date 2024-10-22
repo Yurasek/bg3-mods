@@ -629,6 +629,23 @@ return table.extend({
         end,
     },
     {
+        Id = "BuySweetStoneFeatures",
+        Name = "Sweet Stone Features",
+        Icon = "Spell_Enchantment_Bless",
+        Description = "Affected entity is blessed by their own depiction in stone. It gains a +1d4 bonus to Attack Rolls and Saving Throws.",
+        Cost = 100,
+        Amount = 1,
+        Character = true,
+        OnBuy = function(self, character)
+            Osi.ApplyStatus(character, "WYR_CIRCUS_STATUEBLESS", -1)
+        end,
+        OnReapply = Debounce(100, function(self) ---@param self Unlock
+            for uuid, _ in pairs(self.BoughtBy) do
+                self:OnBuy(uuid)
+            end
+        end),
+    },
+    {
         Id = "BuyBrand",
         Name = Localization.Get("h7cc7adeag848fg491cga683g0faeaea082c3"),
         Icon = "Item_TOOL_GOB_Branding_Tool_A",
